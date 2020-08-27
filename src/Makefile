@@ -1,6 +1,6 @@
 
 OCB=ocamlbuild
-BUILD=$(OCB) -pkg unix -pkg str -I proverif
+BUILD=$(OCB) -pkg unix -pkg str -I proverif -I rust -I ll
 
 all:
 	$(BUILD) main.byte
