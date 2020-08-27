@@ -1,6 +1,6 @@
 
 OCB=ocamlbuild
-BUILD=$(OCB) -pkg unix -pkg str
+BUILD=$(OCB) -pkg unix -pkg str -I proverif
 
 all:
 	$(BUILD) main.byte
