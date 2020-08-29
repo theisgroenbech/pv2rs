@@ -3,5 +3,6 @@ free c1:channel.
 free c2:channel.
 free c3:channel.
 free c4:channel.
+fun aeadEncrypt(bitstring, channel): bitstring.
 
 process 0
