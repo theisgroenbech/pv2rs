@@ -13,11 +13,13 @@ let rec createArguments lst i =
 
 let showFuncs x =
     match x with
-    | Func(args, name, res) -> "fn " ^name ^  "(" ^ String.concat ", " (createArguments args 0) ^ ") -> " ^ (String.capitalize res) ^ " { }"
+    | Func(args, name, res) -> "fn " ^name ^  "(" ^ String.concat ", " (createArguments args 0) ^ ") -> " ^ (String.capitalize res) ^ " { "^(String.capitalize res)^"{ } }"
     | _ -> ""
 
 let getType = function
     | FreeVar(name,typ) -> typ
+    | Type(typ) -> typ
+
 
 let uniq lst =
   let unique_set = Hashtbl.create (List.length lst) in
