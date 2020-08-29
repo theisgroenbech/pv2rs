@@ -6,6 +6,10 @@ let showVars x =
     match x with
     | FreeVar(name,typ) -> "let " ^ (String.lowercase name) ^ " = " ^ (String.capitalize typ) ^ " { };"
 
+let showConsts x =
+    match x with
+    | Const(name,typ) -> "const " ^ (name) ^ " : " ^ (String.capitalize typ) ^ " = " ^(String.capitalize typ)^"{ };"
+
 let rec createArguments lst i =
     match lst with
     | typ::xx -> ("a"^string_of_int i^": &" ^ (String.capitalize typ)) :: (createArguments xx (i+1))
@@ -28,6 +32,10 @@ let uniq lst =
 
 let printFuncs vars =
     List.map (fun x -> Printf.printf "%s\n" (showFuncs x)) vars;
+    Printf.printf "\n"
+
+let printConsts consts =
+    List.map (fun x -> Printf.printf "%s\n" (showConsts x)) consts;
     Printf.printf "\n"
 
 let printMain vars =
