@@ -23,10 +23,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install OCaml
         uses: avsm/setup-ocaml@v1.0.1
-      - name : Install dependencies
-        run: | 
-          opam install ocamlbuild
-          eval $(opam env)
+      - name: Install dependencies
+        run: sudo apt-get install ocamlbuild
       - name: Build project
         run: |
           cd $GITHUB_WORKSPACE/src
