@@ -16,16 +16,19 @@ let rec createArguments f =
   | _ -> []
 
 let translateEquation eq ttl =
+  if((List.length (fst eq.f_type)) = 0) then Garbage (* This is Constants, we take care of those in translateConsts*)
+  else begin
   let params = createArguments((fst eq.f_type))  in
   let result = (snd(eq.f_type)).tname in
   Func(params, fixed_or_renamable eq.f_name , result)
+  end
 
 let translateConsts f =
   match f.f_cat with
     Red (r::rs) -> []
   | Eq ttl->
     if((List.length (fst f.f_type)) = 0) then
-      [f.f_name]
+      [Const(fixed_or_renamable(f.f_name), (snd f.f_type).tname)]
     else []
   | _ -> []
 
@@ -63,7 +66,11 @@ let parse state =
     let funcs = List.map (fun f -> translateFuncs f) ll in
     let cleanFuncs = cleanFuncs funcs in
 
+    (* Constants *)
+    let consts = List.concat(List.map (fun f -> translateConsts f) ll) in
+
     printStructs (env@types);
+    printConsts (consts);
     printFuncs cleanFuncs;
     printMain env;
 
