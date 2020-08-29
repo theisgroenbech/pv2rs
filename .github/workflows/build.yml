@@ -21,9 +21,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Set up OCaml
+      - name: Install OCaml
         uses: avsm/setup-ocaml@v1.0.1
-      - name: Make
+      - name : Install dependencies
+        run: opam install ocamlbuild unix str
+      - name: Build project
         run: |
           cd $GITHUB_WORKSPACE/src
           make
