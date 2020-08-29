@@ -51,6 +51,9 @@ let parse state =
   match state.pi_process_query with
     SingleProcessSingleQuery(p, _) | SingleProcess(p,_) ->
 
+    (* Types *)
+    let types = List.map (fun x-> Type(x.tname)) state.pi_types in
+
     (* Free Variables *)
     let frees = (List.map(fun f -> (f.f_name, (snd f.f_type).tname)) (List.rev state.pi_freenames)) in
     let env = List.map (fun (s,t) -> FreeVar(((fixed_or_renamable s)),(t))) frees in
@@ -60,7 +63,7 @@ let parse state =
     let funcs = List.map (fun f -> translateFuncs f) ll in
     let cleanFuncs = cleanFuncs funcs in
 
-    printStructs env;
+    printStructs (env@types);
     printFuncs cleanFuncs;
     printMain env;
 
