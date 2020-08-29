@@ -1,10 +1,20 @@
 open RustTypes
 
-let createStruct typ = "struct " ^ typ ^ " { }"
+let createStruct typ = "struct " ^ (String.capitalize typ) ^ " { }"
 
 let showVars x =
     match x with
-    | FreeVar(name,typ) -> "let " ^ name ^ " = " ^ typ ^ " { };"
+    | FreeVar(name,typ) -> "let " ^ (String.lowercase name) ^ " = " ^ (String.capitalize typ) ^ " { };"
+
+let rec createArguments lst i =
+    match lst with
+    | typ::xx -> ("a"^string_of_int i^": &" ^ (String.capitalize typ)) :: (createArguments xx (i+1))
+    | [] -> []
+
+let showFuncs x =
+    match x with
+    | Func(args, name, res) -> "fn " ^name ^  "(" ^ String.concat ", " (createArguments args 0) ^ ") -> " ^ (String.capitalize res) ^ " { }"
+    | _ -> ""
 
 let getType = function
     | FreeVar(name,typ) -> typ
@@ -14,13 +24,16 @@ let uniq lst =
   List.iter (fun x -> Hashtbl.replace unique_set x ()) lst;
   Hashtbl.fold (fun x () xs -> x :: xs) unique_set []
 
-let printFreeVars vars =
-    let types = List.map (fun x -> getType x) vars in
+let printFuncs vars =
+    List.map (fun x -> Printf.printf "%s\n" (showFuncs x)) vars;
+    Printf.printf "\n"
 
-    List.map (fun x -> Printf.printf "%s\n" (createStruct x)) (uniq types);
-    Printf.printf "%s" "\n";
+let printMain vars =
     Printf.printf "%s" "fn main() {\n";
     List.map (fun x -> Printf.printf "%s\n" (showVars x)) vars;
-    Printf.printf "%s\n" "}";
+    Printf.printf "%s\n" "}"
 
+let printStructs vars =
+    let types = List.map (fun x -> getType x) vars in
+    List.map (fun x -> Printf.printf "%s\n" (createStruct x)) (uniq types);
     Printf.printf "\n";

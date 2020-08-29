@@ -1,2 +1,4 @@
 open RustTypes
-val printFreeVars : RustTypes.term list -> unit
+val printStructs : RustTypes.rust list -> unit
+val printFuncs : RustTypes.rust list -> unit
+val printMain : RustTypes.rust list -> unit
