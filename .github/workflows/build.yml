@@ -24,7 +24,7 @@ jobs:
       - name: Install OCaml
         uses: avsm/setup-ocaml@v1.0.1
       - name : Install dependencies
-        run: opam install ocamlbuild unix str
+        run: opam install ocamlbuild
       - name: Build project
         run: |
           cd $GITHUB_WORKSPACE/src
