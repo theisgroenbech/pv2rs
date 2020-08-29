@@ -2,5 +2,6 @@
    functions *)
 type rust =
   | Garbage
+  | Type of string
   | FreeVar of string * string
   | Func of string list * string * string
