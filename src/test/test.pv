@@ -1,8 +1,5 @@
-free c:channel.
-free c1:channel.
-free c2:channel.
-free c3:channel.
-free c4:channel.
-fun aeadEncrypt(bitstring, channel): bitstring.
+free c : channel.
 
-process 0
+let test(x: bitstring) = out(c,x) | in(c, y:bitstring).
+
+process (new X: bitstring;new X2: bitstring;new X3: bitstring; new X4: bitstring; (test(X)))
